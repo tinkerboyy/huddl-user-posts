@@ -36,14 +36,15 @@ function App({ getUsers, users }) {
           <Route exact path="/posts/:id">
             <Post />
           </Route>
-          <Route>
+          {/* <Route path="/not-found">
             <NotFound />
-          </Route>
+          </Route> */}
           <Route
             exact
             path="/"
             render={() => users && <Redirect to="/posts" />}
           />
+          {/* <Route exact path="*" render={() => <Redirect to="/not-found" />} /> */}
         </Suspense>
       </ErrorBoundary>
     </Switch>
