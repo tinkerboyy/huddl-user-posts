@@ -1,17 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+
 import './Post.css';
 
-import ErrorModal from '../../../components/error-modal/ErrorModal';
-import Spinner from '../../../components/spinner/Spinner';
-import Card from '../../../components/card/Card';
+import ErrorModal from '../../../components/organisms/error-modal/ErrorModal';
+import Spinner from '../../../components/atoms/spinner/Spinner';
+import Card from '../../../components/atoms/card/Card';
 import CommentsList from '../components/CommentsList';
 
-import { getPost } from '../../../redux/posts/posts-actions';
+import { getPost, setError } from '../../../redux/posts/posts-actions';
 import { getComments } from '../../../redux/comments/comments-actions';
 
-import { useParams } from 'react-router-dom';
 import {
   getPostSelector,
   postsLoading,
@@ -22,7 +23,7 @@ import {
   getAllComments,
   commentsLoading,
 } from '../../../redux/comments/comments.selectors';
-import Button from '../../../components/form-elements/button/Button';
+import Button from '../../../components/atoms/form-elements/button/Button';
 
 const Post = ({
   post,
@@ -33,8 +34,11 @@ const Post = ({
   getComments,
   comments,
   commentsLoading,
+  setError,
 }) => {
+  const history = useHistory();
   const postId = useParams().id;
+  const [triggerComments, setTriggerComments] = useState(false);
 
   useEffect(() => {
     getPost(postId);
@@ -42,17 +46,23 @@ const Post = ({
 
   const loadComments = () => {
     getComments(postId);
+    setTriggerComments(true);
+  };
+
+  const clearError = () => {
+    setError();
+    history.push('/home');
   };
 
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={true} />
-      {isLoading && !post && (
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
         <div className="center">
-          <Spinner />
+          <Spinner>Loading Post</Spinner>
         </div>
       )}
-      {post && (
+      {post && !isLoading && (
         <div className="post">
           <div className="post-info">
             <Card className="post-content">
@@ -63,22 +73,23 @@ const Post = ({
               </div>
               <div className="post-content-wr">
                 <div className="post-content__info">
-                  <span>
-                    <strong>Author:&nbsp;</strong>
-                  </span>{' '}
-                  <h3>{author && author}</h3>
+                  <span>Author:&nbsp;</span> <h3>{author && author}</h3>
                 </div>
               </div>
             </Card>
           </div>
         </div>
       )}
-      <div className="comments comments-display">
-        <Button onClick={loadComments} disabled={isLoading || commentsLoading}>
-          Load Comments
-        </Button>
+      <div className="center comments-display">
+        {!commentsLoading && !isLoading && !triggerComments && (
+          <Button onClick={loadComments}>Load Comments</Button>
+        )}
+        {commentsLoading && <Spinner> Loading Comments</Spinner>}
       </div>
-      {comments && <CommentsList items={comments} />}
+
+      {comments && triggerComments && !commentsLoading && (
+        <CommentsList items={comments} />
+      )}
     </React.Fragment>
   );
 };
@@ -87,6 +98,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getPost: (id) => dispatch(getPost(id)),
     getComments: (id) => dispatch(getComments(id)),
+    setError: () => dispatch(setError()),
   };
 };
 

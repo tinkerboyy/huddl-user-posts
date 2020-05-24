@@ -36,3 +36,9 @@ export function postSuccess(post) {
     post,
   };
 }
+
+export function setError(error) {
+  return {
+    type: 'SET_ERROR',
+  };
+}

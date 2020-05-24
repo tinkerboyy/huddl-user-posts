@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
-  isLoading: true,
-  posts: [],
+  isLoading: false,
+  posts: null,
   currentUser: null,
   error: null,
   post: null,
@@ -49,9 +49,17 @@ const postsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: true,
+        error: 'Fetching failed, please try again later.',
       };
     }
+
+    case 'SET_ERROR': {
+      return {
+        ...state,
+        error: null,
+      };
+    }
+
     default:
       return state;
   }

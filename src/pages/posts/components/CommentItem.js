@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../../../components/card/Card';
+import Card from '../../../components/atoms/card/Card';
 import './CommentItem.css';
 
 const CommentsItem = ({ body, email, name }) => {

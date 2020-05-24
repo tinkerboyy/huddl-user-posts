@@ -2,8 +2,8 @@ import React from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
-import Button from '../../../components/form-elements/button/Button';
 import './Home.css';
+import Button from '../../../components/atoms/form-elements/button/Button';
 
 const Home = () => {
   return (

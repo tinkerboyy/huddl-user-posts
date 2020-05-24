@@ -17,3 +17,9 @@ export function commentsSuccess(comments) {
     comments,
   };
 }
+
+export function setError(error) {
+  return {
+    type: 'SET_ERROR_COMMENTS',
+  };
+}

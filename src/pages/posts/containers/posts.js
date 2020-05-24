@@ -2,32 +2,39 @@ import React, { useEffect } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 
-import ErrorModal from '../../../components/error-modal/ErrorModal';
-import Spinner from '../../../components/spinner/Spinner';
-
+import ErrorModal from '../../../components/organisms/error-modal/ErrorModal';
+import Spinner from '../../../components/atoms/spinner/Spinner';
 import PostsList from '../components/PostsList';
-import { getPosts } from '../../../redux/posts/posts-actions';
+import { getPosts, setError } from '../../../redux/posts/posts-actions';
 import {
   postsLoading,
   postsErrorSelector,
   getAllPostsSelector,
 } from '../../../redux/posts/posts-selectors';
+import { useHistory } from 'react-router-dom';
 
 const Posts = ({ getPosts, posts, isLoading, error }) => {
+  const history = useHistory();
+
   useEffect(() => {
     getPosts();
     return () => console.log('I am unmounting');
   }, [getPosts]);
 
+  const clearError = () => {
+    setError();
+    history.push('/home');
+  };
+
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={true} />
-      {!posts.length && (
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
         <div className="center">
-          <Spinner />
+          <Spinner>Loading Posts</Spinner>
         </div>
       )}
-      {posts.length && <PostsList items={posts} />}
+      {!isLoading && posts && <PostsList items={posts} />}
     </React.Fragment>
   );
 };
@@ -35,6 +42,7 @@ const Posts = ({ getPosts, posts, isLoading, error }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getPosts: () => dispatch(getPosts()),
+    setError: () => dispatch(setError()),
   };
 };
 

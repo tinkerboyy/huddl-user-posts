@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import Card from '../../../components/card/Card';
-
 import './PostItem.css';
+
+import Card from '../../../components/atoms/card/Card';
 import { getAllUsersSelector } from '../../../redux/users/user-selectors';
 
 const PostItem = ({ id, title, body, userId, users }) => {

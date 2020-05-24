@@ -1,7 +1,8 @@
 import React from 'react';
 
+import Card from '../../../components/atoms/card/Card';
 import PostItem from './PostItem';
-import Card from '../../../components/card/Card';
+
 import './PostsList.css';
 
 const PostsList = (props) => {

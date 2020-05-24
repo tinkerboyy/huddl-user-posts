@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import Header from '../header/Header';
-import NavLinks from '../nav-links/NavLinks';
-import SideDrawer from '../side-drawer/SideDrawer';
-import Backdrop from '../backdrop/Backdrop';
 import './Navigation.css';
+
+import Header from '../../atoms/header/Header';
+import NavLinks from '../../atoms/nav-links/NavLinks';
+import SideDrawer from '../../atoms/side-drawer/SideDrawer';
+import Backdrop from '../../atoms/backdrop/Backdrop';
 
 const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -37,7 +37,7 @@ const MainNavigation = (props) => {
           <span />
         </button>
         <h1 className="main-navigation__title">
-          <Link to="/">Huddle</Link>
+          <Link to="/">huddl</Link>
         </h1>
         <nav className="main-navigation__header-nav">
           <NavLinks />

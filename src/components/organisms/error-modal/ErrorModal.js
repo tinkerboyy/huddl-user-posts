@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Modal from '../modal/Modal';
-import Button from '../form-elements/button/Button';
+import Modal from '../../molecules/modal/Modal';
+import Button from '../../atoms/form-elements/button/Button';
 
 const ErrorModal = (props) => {
   return (

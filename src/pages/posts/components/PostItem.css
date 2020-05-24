@@ -15,6 +15,10 @@
   background: #292929;
 }
 
+.post-item .post-item__content {
+  padding: 0;
+}
+
 .post-item a:hover,
 .post-item a:active {
   background: #ffd900;

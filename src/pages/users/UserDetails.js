@@ -3,13 +3,12 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './UserDetails.css';
-
+import Card from '../../components/atoms/card/Card';
 import {
   currentUserCompanySelector,
   currentUserSelector,
 } from '../../redux/users/user-selectors';
 import { getUser } from '../../redux/users/user-actions';
-import Card from '../../components/card/Card';
 
 const UserDetails = ({ user, getUser, company }) => {
   const id = useParams().id;

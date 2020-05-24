@@ -25,7 +25,13 @@ const commentsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isLoading: false,
-        error: true,
+        error: 'Fetching failed, please try again later.',
+      };
+    }
+    case 'SET_ERROR_COMMENTS': {
+      return {
+        ...state,
+        error: null,
       };
     }
     default:

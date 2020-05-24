@@ -1,0 +1,12 @@
+.not-found {
+  list-style: none;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #292929;
+  max-width: 50rem;
+  color: white;
+}

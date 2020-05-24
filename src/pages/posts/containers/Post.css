@@ -4,8 +4,8 @@
   padding: 0;
   width: 90%;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  /* justify-content: center; */
+  /* flex-wrap: wrap; */
   background: #292929;
   max-width: 50rem;
 }
@@ -17,8 +17,9 @@
   color: #ffd900;
 }
 
-.post-content {
+.post-info .post-content {
   padding: 0;
+  box-shadow: none;
 }
 
 .post-content-wr {
