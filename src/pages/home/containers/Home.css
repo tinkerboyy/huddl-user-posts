@@ -1,0 +1,16 @@
+.home {
+  /* display: flex;
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+  max-width: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate(0, 50%); */
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}

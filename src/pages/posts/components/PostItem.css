@@ -1,0 +1,49 @@
+.post-item {
+  margin: 1rem;
+  width: calc(45% - 2rem);
+  min-width: 17.5rem;
+}
+
+.post-item a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  padding: 1rem;
+  color: white;
+  background: #292929;
+}
+
+.post-item a:hover,
+.post-item a:active {
+  background: #ffd900;
+}
+
+.post-item__content {
+  padding: 0;
+}
+
+.post-item__image {
+  width: 4rem;
+  height: 4rem;
+  margin-right: 1rem;
+}
+
+.post-item__info h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: normal;
+  color: #ffd900;
+}
+
+.post-item:hover h2,
+.post-item:active h2,
+.post-item:hover h3,
+.post-item:active h3 {
+  color: #292929;
+}
+
+.post-item__info h3 {
+  margin: 0;
+}

@@ -1,0 +1,19 @@
+export function getComments(postId) {
+  return {
+    type: 'LOAD_COMMENTS',
+    postId,
+  };
+}
+
+export function commentsFailure() {
+  return {
+    type: 'COMMENTS_FAILURE',
+  };
+}
+
+export function commentsSuccess(comments) {
+  return {
+    type: 'COMMENTS_SUCCESS',
+    comments,
+  };
+}
