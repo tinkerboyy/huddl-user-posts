@@ -5,24 +5,11 @@
   transform: translate(-50%, -50%);
 }
 
-/* .menu {
-  background-color: white;
-  color: black;
-  z-index: 99;
-  min-height: 100px;
-  max-height: 200px;
-  overflow: auto;
-} */
-
-/* .item-highlighted {
-  background-color: aqua;
-  font-weight: bold;
-} */
-
 .autocomplete {
   display: flex;
   margin: 0 auto;
   width: 90%;
+  justify-content: center;
 }
 
 label {

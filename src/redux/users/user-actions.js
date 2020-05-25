@@ -25,8 +25,6 @@ export function userSuccess(user) {
 }
 
 export function getUser(id) {
-  console.log(id);
-
   return {
     type: 'LOAD_USER',
     id,
