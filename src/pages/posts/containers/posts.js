@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-
+import { useHistory } from 'react-router-dom';
 import ErrorModal from '../../../components/organisms/error-modal/ErrorModal';
 import Spinner from '../../../components/atoms/spinner/Spinner';
 import PostsList from '../components/PostsList';
@@ -11,7 +11,6 @@ import {
   postsErrorSelector,
   getAllPostsSelector,
 } from '../../../redux/posts/posts-selectors';
-import { useHistory } from 'react-router-dom';
 
 const Posts = ({ getPosts, posts, isLoading, error }) => {
   const history = useHistory();

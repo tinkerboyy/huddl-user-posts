@@ -7,10 +7,12 @@ import Card from '../../components/atoms/card/Card';
 import {
   currentUserCompanySelector,
   currentUserSelector,
+  usersLoadingSelector,
 } from '../../redux/users/user-selectors';
 import { getUser } from '../../redux/users/user-actions';
+import Spinner from '../../components/atoms/spinner/Spinner';
 
-const UserDetails = ({ user, getUser, company }) => {
+const UserDetails = ({ user, getUser, company, isLoading }) => {
   const id = useParams().id;
 
   useEffect(() => {
@@ -19,7 +21,12 @@ const UserDetails = ({ user, getUser, company }) => {
 
   return (
     <React.Fragment>
-      {user && (
+      {isLoading && (
+        <div className="center">
+          <Spinner>Loading User</Spinner>
+        </div>
+      )}
+      {user && !isLoading && (
         <div className="user-details">
           <div className="user-details__block">
             <Card className="user-details__content">
@@ -79,6 +86,7 @@ const mapStateToProps = (state) => {
   return {
     company: currentUserCompanySelector(state),
     user: currentUserSelector(state),
+    isLoading: usersLoadingSelector(state),
   };
 };
 

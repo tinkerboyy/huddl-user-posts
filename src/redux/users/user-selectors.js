@@ -16,3 +16,8 @@ export const currentUserCompanySelector = createSelector(
   usersSelector,
   ({ currentUser }) => currentUser && currentUser.company
 );
+
+export const usersLoadingSelector = createSelector(
+  usersSelector,
+  ({ isLoading }) => isLoading
+);
