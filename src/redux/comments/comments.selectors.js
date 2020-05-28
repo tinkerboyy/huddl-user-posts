@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 const commentsSelector = (state) => state.comments;
 
-export const commentsLoading = createSelector(
+export const commentsLoadingSelector = createSelector(
   commentsSelector,
   ({ isLoading }) => isLoading
 );

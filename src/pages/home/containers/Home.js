@@ -1,6 +1,5 @@
 import React, { useMemo, useCallback } from 'react';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import './Home.css';
@@ -8,8 +7,9 @@ import Button from '../../../components/atoms/form-elements/button/Button';
 import { getAllUsersSelector } from '../../../redux/users/user-selectors';
 import Combobox from '../../../components/atoms/combobox/Combobox';
 
-const Home = ({ users }) => {
+const Home = () => {
   const history = useHistory();
+  const users = useSelector((state) => getAllUsersSelector(state));
 
   const handleSelected = useCallback(
     ({ id }) => {
@@ -33,12 +33,4 @@ const Home = ({ users }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    users: getAllUsersSelector(state),
-  };
-};
-
-const enhance = compose(connect(mapStateToProps));
-
-export default enhance(Home);
+export default Home;

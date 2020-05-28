@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './UserDetails.css';
 import Card from '../../components/atoms/card/Card';
@@ -12,12 +11,17 @@ import {
 import { getUser } from '../../redux/users/user-actions';
 import Spinner from '../../components/atoms/spinner/Spinner';
 
-const UserDetails = ({ user, getUser, company, isLoading }) => {
+const UserDetails = () => {
+  const dispatch = useDispatch();
   const id = useParams().id;
 
+  const isLoading = useSelector((state) => usersLoadingSelector(state));
+  const user = useSelector((state) => currentUserSelector(state));
+  const company = useSelector((state) => currentUserCompanySelector(state));
+
   useEffect(() => {
-    getUser(id);
-  }, [id, getUser]);
+    dispatch(getUser(id));
+  }, [id, dispatch]);
 
   return (
     <React.Fragment>
@@ -76,20 +80,4 @@ const UserDetails = ({ user, getUser, company, isLoading }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUser: (id) => dispatch(getUser(id)),
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    company: currentUserCompanySelector(state),
-    user: currentUserSelector(state),
-    isLoading: usersLoadingSelector(state),
-  };
-};
-
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
-
-export default enhance(UserDetails);
+export default UserDetails;

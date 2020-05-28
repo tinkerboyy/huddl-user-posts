@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
 import './Post.css';
@@ -9,6 +8,7 @@ import ErrorModal from '../../../components/organisms/error-modal/ErrorModal';
 import Spinner from '../../../components/atoms/spinner/Spinner';
 import Card from '../../../components/atoms/card/Card';
 import CommentsList from '../components/CommentsList';
+import Button from '../../../components/atoms/form-elements/button/Button';
 
 import { getPost, setError } from '../../../redux/posts/posts-actions';
 import { getComments } from '../../../redux/comments/comments-actions';
@@ -21,36 +21,35 @@ import {
 } from '../../../redux/posts/posts-selectors';
 import {
   getAllComments,
-  commentsLoading,
+  commentsLoadingSelector,
 } from '../../../redux/comments/comments.selectors';
-import Button from '../../../components/atoms/form-elements/button/Button';
 
-const Post = ({
-  post,
-  getPost,
-  error,
-  isLoading,
-  author,
-  getComments,
-  comments,
-  commentsLoading,
-  setError,
-}) => {
-  const history = useHistory();
-  const postId = useParams().id;
+const Post = () => {
   const [triggerComments, setTriggerComments] = useState(false);
+  const postId = useParams().id;
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const error = useSelector((state) => postsErrorSelector(state));
+  const isLoading = useSelector((state) => postsLoading(state));
+  const author = useSelector((state) => getPostAuthorSelector(state));
+  const post = useSelector((state) => getPostSelector(state));
+  const comments = useSelector((state) => getAllComments(state));
+  const commentsLoading = useSelector((state) =>
+    commentsLoadingSelector(state)
+  );
 
   useEffect(() => {
-    getPost(postId);
-  }, [getPost, postId]);
+    dispatch(getPost(postId));
+  }, [postId, dispatch]);
 
   const loadComments = () => {
-    getComments(postId);
+    dispatch(getComments(postId));
     setTriggerComments(true);
   };
 
   const clearError = () => {
-    setError();
+    dispatch(setError());
     history.push('/home');
   };
 
@@ -94,25 +93,4 @@ const Post = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getPost: (id) => dispatch(getPost(id)),
-    getComments: (id) => dispatch(getComments(id)),
-    setError: () => dispatch(setError()),
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    post: getPostSelector(state),
-    isLoading: postsLoading(state),
-    error: postsErrorSelector(state),
-    author: getPostAuthorSelector(state),
-    comments: getAllComments(state),
-    commentsLoading: commentsLoading(state),
-  };
-};
-
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
-
-export default enhance(Post);
+export default Post;

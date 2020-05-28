@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorModal from '../../../components/organisms/error-modal/ErrorModal';
 import Spinner from '../../../components/atoms/spinner/Spinner';
@@ -12,13 +11,17 @@ import {
   getAllPostsSelector,
 } from '../../../redux/posts/posts-selectors';
 
-const Posts = ({ getPosts, posts, isLoading, error }) => {
+const Posts = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => postsLoading(state));
+  const error = useSelector((state) => postsErrorSelector(state));
+  const posts = useSelector((state) => getAllPostsSelector(state));
 
   useEffect(() => {
-    getPosts();
+    dispatch(getPosts());
     return () => console.log('I am unmounting');
-  }, [getPosts]);
+  }, [dispatch]);
 
   const clearError = () => {
     setError();
@@ -38,21 +41,4 @@ const Posts = ({ getPosts, posts, isLoading, error }) => {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getPosts: () => dispatch(getPosts()),
-    setError: () => dispatch(setError()),
-  };
-};
-
-const mapStateToProps = (state) => {
-  return {
-    posts: getAllPostsSelector(state),
-    isLoading: postsLoading(state),
-    error: postsErrorSelector(state),
-  };
-};
-
-const enhance = compose(connect(mapStateToProps, mapDispatchToProps));
-
-export default enhance(Posts);
+export default Posts;

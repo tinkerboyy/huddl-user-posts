@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './PostItem.css';
 
 import Card from '../../../components/atoms/card/Card';
 import { getAllUsersSelector } from '../../../redux/users/user-selectors';
 
-const PostItem = ({ id, title, body, userId, users }) => {
+const PostItem = ({ id, title, userId }) => {
+  const users = useSelector((state) => getAllUsersSelector(state));
   const user = users && users.find((user) => user.id === userId);
+
   return (
     <li className="post-item">
       <Card className="post-item__content">
@@ -27,12 +28,4 @@ const PostItem = ({ id, title, body, userId, users }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    users: getAllUsersSelector(state),
-  };
-};
-
-const enhance = compose(connect(mapStateToProps));
-
-export default enhance(PostItem);
+export default PostItem;
