@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { compose } from 'recompose';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 
 import ErrorBoundary from './components/atoms/error-boundary/ErrorBoundary';
@@ -13,12 +12,16 @@ import Post from './pages/posts/containers/Post';
 import UserDetails from './pages/users/UserDetails';
 
 import { getUsers } from './redux/users/user-actions';
-import NotFound from './pages/not-found/NotFound';
+import { getAllUsersSelector } from './redux/users/user-selectors';
+//mport NotFound from './pages/not-found/NotFound';
 
-function App({ getUsers, users }) {
+function App() {
+  const dispatch = useDispatch();
+  const users = useSelector((state) => getAllUsersSelector(state));
+
   useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+    dispatch(getUsers());
+  }, [dispatch]);
 
   const routes = (
     <Switch>
@@ -58,16 +61,4 @@ function App({ getUsers, users }) {
   );
 }
 
-const mapStateToProps = ({ users }) => {
-  return {
-    users,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  getUsers: () => dispatch(getUsers()),
-});
-
-const enhancer = compose(connect(mapStateToProps, mapDispatchToProps));
-
-export default enhancer(App);
+export default App;
