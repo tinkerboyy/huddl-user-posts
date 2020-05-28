@@ -26,7 +26,7 @@ const UserDetails = ({ user, getUser, company, isLoading }) => {
           <Spinner>Loading User</Spinner>
         </div>
       )}
-      {user && !isLoading && (
+      {!isLoading && user && (
         <div className="user-details">
           <div className="user-details__block">
             <Card className="user-details__content">

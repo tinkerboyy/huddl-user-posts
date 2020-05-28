@@ -14,6 +14,13 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
+    case 'LOAD_USER': {
+      return {
+        ...state,
+        isLoading: true,
+      };
+    }
+
     case 'USERS_SUCCESS': {
       return {
         ...state,
@@ -30,7 +37,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
       };
     }
 
-    case 'USERS_Failure': {
+    case 'USERS_FAILURE': {
       return {
         ...state,
         isLoading: false,

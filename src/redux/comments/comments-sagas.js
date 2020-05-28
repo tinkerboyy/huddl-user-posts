@@ -3,7 +3,6 @@ import axios from 'axios';
 import { commentsFailure, commentsSuccess } from './comments-actions';
 
 function* handleGetComments({ postId }) {
-  console.log(postId);
   try {
     const { data } = yield call(
       axios.get,
