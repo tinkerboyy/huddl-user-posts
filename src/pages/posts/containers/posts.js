@@ -4,7 +4,11 @@ import { useHistory } from 'react-router-dom';
 import ErrorModal from '../../../components/organisms/error-modal/ErrorModal';
 import Spinner from '../../../components/atoms/spinner/Spinner';
 import PostsList from '../components/PostsList';
-import { getPosts, setError } from '../../../redux/posts/posts-actions';
+import {
+  getPosts,
+  setError,
+  cancelPosts,
+} from '../../../redux/posts/posts-actions';
 import {
   postsLoading,
   postsErrorSelector,
@@ -20,7 +24,7 @@ const Posts = () => {
 
   useEffect(() => {
     dispatch(getPosts());
-    return () => console.log('I am unmounting');
+    return () => dispatch(cancelPosts());
   }, [dispatch]);
 
   const clearError = () => {

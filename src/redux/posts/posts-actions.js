@@ -42,3 +42,9 @@ export function setError(error) {
     type: 'SET_ERROR',
   };
 }
+
+export function cancelPosts() {
+  return {
+    type: 'CANCEL_POSTS',
+  };
+}

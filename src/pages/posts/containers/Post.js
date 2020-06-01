@@ -11,7 +11,10 @@ import CommentsList from '../components/CommentsList';
 import Button from '../../../components/atoms/form-elements/button/Button';
 
 import { getPost, setError } from '../../../redux/posts/posts-actions';
-import { getComments } from '../../../redux/comments/comments-actions';
+import {
+  getComments,
+  cancelComments,
+} from '../../../redux/comments/comments-actions';
 
 import {
   getPostSelector,
@@ -42,6 +45,10 @@ const Post = () => {
   useEffect(() => {
     dispatch(getPost(postId));
   }, [postId, dispatch]);
+
+  useEffect(() => {
+    return () => dispatch(cancelComments());
+  }, [dispatch]);
 
   const loadComments = () => {
     dispatch(getComments(postId));

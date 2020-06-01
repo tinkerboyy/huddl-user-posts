@@ -1,13 +1,10 @@
 import { takeLatest, put, all, call } from 'redux-saga/effects';
-import axios from 'axios';
+import axios from '../axios';
 import { usersSuccess, userSuccess, usersFailure } from './user-actions';
 
 function* handleGetUsers() {
   try {
-    const { data } = yield call(
-      axios.get,
-      'https://jsonplaceholder.typicode.com/users'
-    );
+    const { data } = yield call(axios.get, '/users');
     yield put(usersSuccess(data));
   } catch (e) {
     yield put(usersFailure());
@@ -16,10 +13,7 @@ function* handleGetUsers() {
 
 function* handleGetUser({ id }) {
   try {
-    const { data } = yield call(
-      axios.get,
-      `https://jsonplaceholder.typicode.com/users/${id}`
-    );
+    const { data } = yield call(axios.get, `/users/${id}`);
     yield put(userSuccess(data));
   } catch (e) {
     yield put(usersFailure());

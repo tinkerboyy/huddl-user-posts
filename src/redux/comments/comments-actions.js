@@ -23,3 +23,9 @@ export function setError(error) {
     type: 'SET_ERROR_COMMENTS',
   };
 }
+
+export function cancelComments() {
+  return {
+    type: 'CANCEL_COMMENTS',
+  };
+}

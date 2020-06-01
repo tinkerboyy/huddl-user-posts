@@ -1,13 +1,10 @@
-import { takeLatest, put, all, call } from 'redux-saga/effects';
-import axios from 'axios';
+import { takeLatest, put, all, call, cancel } from 'redux-saga/effects';
+import axios from '../axios';
 import { commentsFailure, commentsSuccess } from './comments-actions';
 
 function* handleGetComments({ postId }) {
   try {
-    const { data } = yield call(
-      axios.get,
-      `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
-    );
+    const { data } = yield call(axios.get, `/posts/${postId}/comments`);
     yield put(commentsSuccess(data));
   } catch (e) {
     yield put(commentsFailure());
@@ -16,6 +13,10 @@ function* handleGetComments({ postId }) {
 
 export function* onGetComments() {
   yield takeLatest('LOAD_COMMENTS', handleGetComments);
+}
+
+export function* onCancelComments() {
+  yield cancel(handleGetComments);
 }
 
 export function* commentsSagas() {

@@ -1,5 +1,5 @@
-import { takeLatest, put, all, call } from 'redux-saga/effects';
-import axios from 'axios';
+import { takeLatest, put, all, call, cancel } from 'redux-saga/effects';
+import axios from '../axios';
 import {
   postsFailure,
   postsSuccess,
@@ -9,10 +9,7 @@ import {
 
 function* handleGetPosts() {
   try {
-    const { data } = yield call(
-      axios.get,
-      'https://jsonplaceholder.typicode.com/posts'
-    );
+    const { data } = yield call(axios.get, '/posts');
     yield put(postsSuccess(data));
   } catch (e) {
     yield put(postsFailure());
@@ -21,10 +18,7 @@ function* handleGetPosts() {
 
 function* handleGetPost({ id }) {
   try {
-    const { data } = yield call(
-      axios.get,
-      `https://jsonplaceholder.typicode.com/posts/${id}`
-    );
+    const { data } = yield call(axios.get, `/posts/${id}`);
     yield put(postSuccess(data));
   } catch (e) {
     yield put(postFailure());
@@ -37,6 +31,10 @@ export function* onGetPosts() {
 
 export function* onGetPost() {
   yield takeLatest('LOAD_POST', handleGetPost);
+}
+
+export function* onCancelPosts() {
+  yield cancel(handleGetPosts);
 }
 
 export function* postsSagas() {
